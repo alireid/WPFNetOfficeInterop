@@ -17,11 +17,15 @@ namespace WPFNetOfficeInterop.Helpers
         /// <returns>string filename</returns>
         public static string GetUniqueFilePath(string filePath)
         {
+            string folderPath = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string fileExtension = Path.GetExtension(filePath);
+
+            // create dir if doesnt exist
+            System.IO.Directory.CreateDirectory(folderPath);
+
             if (File.Exists(filePath))
             {
-                string folderPath = Path.GetDirectoryName(filePath);
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
-                string fileExtension = Path.GetExtension(filePath);
                 int number = 1;
 
                 Match regex = Regex.Match(fileName, @"^(.+) \((\d+)\)$");
